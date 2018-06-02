@@ -2,49 +2,78 @@
 //  PlacesTableViewController.swift
 //  Places
 //
-//  Created by Aluno on 02/06/18.
+//  Created by Liv Souza on 02/06/18.
 //  Copyright © 2018 CESAR School. All rights reserved.
 //
 
 import UIKit
 
-class PlacesTableViewController: UITableViewController {
 
+
+class PlacesTableViewController: UITableViewController {
+    
+    
+    var places : [Place] = []
+
+    let ud = UserDefaults.standard
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        loadPlaces()
+    }
+    
+    func loadPlaces() {
+        
+        if let placeData = ud.data(forKey: "places") {
+            do {
+                places = try JSONDecoder().decode([Place].self, from: placeData)
+                tableView.reloadData()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func savePlaces() {
+        do {
+            let json = try JSONEncoder().encode(places)
+            self.ud.setValue(json, forKey: "places")
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+  
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return places.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         // Configure the cell...
-
+        let place = places[indexPath.row]
+        cell.textLabel?.text = place.name
+        
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier! == "finderSegue" {
+            let vc = segue.destination as! PlaceFinderViewController
+            vc.delegate = self
+        }
+    }
+    
+    
+
+    /*
+    
     */
 
     /*
@@ -86,10 +115,31 @@ class PlacesTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+   
     */
 
 }
+
+
+extension PlacesTableViewController: PlaceFinderDelegate {
+    
+    func addPlace(_ place: Place) {
+        
+        // 1
+        
+        // Como evitar que um place de mesma (longitude e latitude) seja adicionado?
+        // TIP. : definir uma regra no model de Place
+        
+        if !places.contains(place) {
+            // save
+            self.places.append(place)
+            self.savePlaces()
+            self.tableView.reloadData()
+        }
+        
+        
+    }
+}
+
+
+

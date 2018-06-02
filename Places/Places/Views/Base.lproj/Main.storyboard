@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="cEi-ae-J60" imageView="jLt-7r-RVA" rowHeight="60" style="IBUITableViewCellStyleDefault" id="qtv-qY-hGE">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" textLabel="cEi-ae-J60" imageView="jLt-7r-RVA" rowHeight="60" style="IBUITableViewCellStyleDefault" id="qtv-qY-hGE">
                                 <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qtv-qY-hGE" id="TQx-01-Ejh">
@@ -51,7 +51,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="Xq1-gA-n3V"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="O09-vG-cuw">
                             <connections>
-                                <segue destination="isb-4r-t15" kind="presentation" id="ycF-Hd-pCn"/>
+                                <segue destination="isb-4r-t15" kind="presentation" identifier="finderSegue" id="ycF-Hd-pCn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -167,20 +167,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-ar-H2b">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <subviews>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dKf-Si-NMF">
-                                        <rect key="frame" x="169" y="305" width="37" height="37"/>
-                                        <color key="color" name="main_color"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="dKf-Si-NMF" firstAttribute="centerX" secondItem="g8s-ar-H2b" secondAttribute="centerX" id="TRI-qU-Ehn"/>
-                                    <constraint firstItem="dKf-Si-NMF" firstAttribute="centerY" secondItem="g8s-ar-H2b" secondAttribute="centerY" id="bPN-Rj-vYE"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Di-gj-Ogn">
                                 <rect key="frame" x="20" y="70" width="335" height="547"/>
                                 <subviews>
@@ -232,6 +218,20 @@
                                     <action selector="close:" destination="isb-4r-t15" eventType="touchUpInside" id="iTO-ER-S0B"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-ar-H2b">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dKf-Si-NMF">
+                                        <rect key="frame" x="169" y="305" width="37" height="37"/>
+                                        <color key="color" name="main_color"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="dKf-Si-NMF" firstAttribute="centerX" secondItem="g8s-ar-H2b" secondAttribute="centerX" id="TRI-qU-Ehn"/>
+                                    <constraint firstItem="dKf-Si-NMF" firstAttribute="centerY" secondItem="g8s-ar-H2b" secondAttribute="centerY" id="bPN-Rj-vYE"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>

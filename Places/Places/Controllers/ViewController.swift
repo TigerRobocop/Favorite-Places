@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Places
 //
-//  Created by Aluno on 02/06/18.
+//  Created by Liv Souza on 02/06/18.
 //  Copyright © 2018 CESAR School. All rights reserved.
 //
 

@@ -15,6 +15,7 @@
 		572795E120C309BD00E50BC0 /* PlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572795E020C309BD00E50BC0 /* PlacesTableViewController.swift */; };
 		572795E320C30A1400E50BC0 /* PlaceFinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572795E220C30A1400E50BC0 /* PlaceFinderViewController.swift */; };
 		572795E520C318DF00E50BC0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572795E420C318DF00E50BC0 /* MapViewController.swift */; };
+		572795E720C324EB00E50BC0 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572795E620C324EB00E50BC0 /* Place.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		572795E020C309BD00E50BC0 /* PlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTableViewController.swift; sourceTree = "<group>"; };
 		572795E220C30A1400E50BC0 /* PlaceFinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceFinderViewController.swift; sourceTree = "<group>"; };
 		572795E420C318DF00E50BC0 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		572795E620C324EB00E50BC0 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		572795DF20C3085600E50BC0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				572795E620C324EB00E50BC0 /* Place.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 				572795CD20C307DF00E50BC0 /* ViewController.swift in Sources */,
 				572795CB20C307DF00E50BC0 /* AppDelegate.swift in Sources */,
 				572795E320C30A1400E50BC0 /* PlaceFinderViewController.swift in Sources */,
+				572795E720C324EB00E50BC0 /* Place.swift in Sources */,
 				572795E520C318DF00E50BC0 /* MapViewController.swift in Sources */,
 				572795E120C309BD00E50BC0 /* PlacesTableViewController.swift in Sources */,
 			);
