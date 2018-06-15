@@ -11,11 +11,54 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    var places: [Place]!
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var viInfo: UIView!
     @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var lbAddress: UILabel!
+    
+    
+    
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // esconder os componentes
+        searchBar.isHidden = true
+        viInfo.isHidden = true
+        // configura o título
+        if places.count == 1 {
+            title = places[0].name
+        } else {
+            title = "Meus lugares"
+        }
+
+        for place in places {
+            addPlace(place)
+        }
+        showPlaces()
+        // Do any additional setup after loading the view.
+    }
+    
+    func addPlace(_ place:Place) {
+        print("Place -> \(place.name)")
+        places.append(place)
+        
+        // usando Annotations
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = place.coordinate
+        annotation.title = place.name
+        
+        mapView.addAnnotation(annotation)
+    }
+    
+    func showPlaces() {
+        mapView.showAnnotations(mapView.annotations, animated: true)
+    }
     
     @IBAction func showSearchBar(_ sender: UIBarButtonItem) {
         
@@ -23,13 +66,6 @@ class MapViewController: UIViewController {
     
     @IBAction func showRoute(_ sender: UIButton) {
         
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

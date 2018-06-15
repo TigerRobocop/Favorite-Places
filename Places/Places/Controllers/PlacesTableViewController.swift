@@ -16,12 +16,20 @@ class PlacesTableViewController: UITableViewController {
     var places : [Place] = []
 
     let ud = UserDefaults.standard
+    var lbNoPlaces: UILabel!
     
-    
+    @objc func showAll(){
+        performSegue(withIdentifier: "mapSegue", sender: places)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        lbNoPlaces = UILabel()
+        lbNoPlaces.text = "Cadastre os locais que deseja conhecer\nclicando no botão + acima."
+        lbNoPlaces.textAlignment = .center
+        lbNoPlaces.numberOfLines = 0
+        
         loadPlaces()
     }
     
@@ -49,6 +57,16 @@ class PlacesTableViewController: UITableViewController {
   
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return places.count
+        if places.count > 0 {
+            let btShowAll = UIBarButtonItem(title: "Exibir todos", style: .plain, target: self, action: #selector(showAll))
+            navigationItem.leftBarButtonItem = btShowAll
+            tableView.backgroundView = nil
+        } else {
+            navigationItem.leftBarButtonItem = nil
+            tableView.backgroundView = lbNoPlaces
+        }
+        
         return places.count
     }
     
@@ -63,10 +81,34 @@ class PlacesTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let place = places[indexPath.row]
+        performSegue(withIdentifier: "mapSegue", sender: place)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier! == "finderSegue" {
             let vc = segue.destination as! PlaceFinderViewController
             vc.delegate = self
+        } else if segue.identifier! == "mapSegue" {
+            let vc = segue.destination as! MapViewController
+            
+            switch sender {
+            case let place as Place:
+                vc.places = [place]
+            default:
+                vc.places = places
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            places.remove(at: indexPath.row)
+            savePlaces()
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
@@ -86,14 +128,7 @@ class PlacesTableViewController: UITableViewController {
 
     /*
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
+    
     */
 
     /*
