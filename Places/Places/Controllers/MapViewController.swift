@@ -52,8 +52,9 @@ class MapViewController: UIViewController {
         }
         
         configureLocationButton()
-        requestUserLocationAuthorization()
         showPlaces()
+        requestUserLocationAuthorization()
+       
     }
     
     // MARK: Actions
@@ -118,7 +119,7 @@ class MapViewController: UIViewController {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
             let renderer = MKPolylineRenderer(overlay: overlay)
-            renderer.strokeColor = UIColor(named: "main")?.withAlphaComponent(0.8)
+            renderer.strokeColor = UIColor(named: "main_color")?.withAlphaComponent(0.8)
             renderer.lineWidth = 5.0
             
             return renderer
