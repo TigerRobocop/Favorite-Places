@@ -27,9 +27,12 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // esconder os componentes
+//         esconder os componentes
         searchBar.isHidden = true
         viInfo.isHidden = true
+
+        mapView.delegate = self
+        
         // configura o título
         if places.count == 1 {
             title = places[0].name
@@ -41,19 +44,26 @@ class MapViewController: UIViewController {
             addPlace(place)
         }
         showPlaces()
-        // Do any additional setup after loading the view.
+//        // Do any additional setup after loading the view.
     }
     
     func addPlace(_ place:Place) {
         print("Place -> \(place.name)")
         places.append(place)
         
-        // usando Annotations
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = place.coordinate
+        // usando PlaceAnnotation do nosso model
+        let annotation = PlaceAnnotation(coordinate: place.coordinate, type: .place)
+        annotation.address = place.address
+        annotation.coordinate = place.coordinate // variavel computada
         annotation.title = place.name
-        
         mapView.addAnnotation(annotation)
+        
+//        // usando Annotations
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = place.coordinate
+//        annotation.title = place.name
+//
+//        mapView.addAnnotation(annotation)
     }
     
     func showPlaces() {
@@ -61,7 +71,8 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func showSearchBar(_ sender: UIBarButtonItem) {
-        
+        searchBar.isHidden = false
+        searchBar.becomeFirstResponder()
     }
     
     @IBAction func showRoute(_ sender: UIButton) {
@@ -84,4 +95,49 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+
+
+extension MapViewController: MKMapViewDelegate {
+    
+    // usado para recuperar uma annotationView para permitir modifica-la
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if !(annotation is PlaceAnnotation) {
+            // mantem o default caso nao seja o tipo esperado.
+            return nil
+        }
+        
+        let placeAnnotation = annotation as! PlaceAnnotation
+        let type = placeAnnotation.type
+        let identifier = "\(type)"
+        // tentando reusar uma view do pino padrao (MKMarkerAnnotationView)
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+        
+        if annotationView == nil {
+            // criando pela primeira vez uma annotation view
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        }
+        annotationView?.annotation = annotation
+        annotationView?.canShowCallout = true // informacoes extras na forma de um balao
+        // usando Point of Interess
+        annotationView?.markerTintColor = type == .place ? UIColor(named: "main") : UIColor(named: "poi")
+        annotationView?.glyphImage = type == .place ?  #imageLiteral(resourceName: "placeGlyph") :  #imageLiteral(resourceName: "poiGlyph")
+        annotationView?.displayPriority = type == .place ? .required : .defaultHigh
+        
+        return annotationView
+    }
+    
+}
+
+
+extension MapViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.isHidden = true
+        searchBar.resignFirstResponder()
+        // 1
+    }
+    
 }
